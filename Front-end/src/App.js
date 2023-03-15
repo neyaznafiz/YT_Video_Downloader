@@ -1,8 +1,9 @@
-import "./App.css";
+import Download from "./Cmponents/Download";
+
 
 function App() {
-  return <div className="App">
-    hello
+  return <div>
+    <Download/>
     </div>;
 }
 

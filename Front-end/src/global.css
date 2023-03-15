@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* button style */
+.button {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    color: white;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid white;
+    z-index: 1;
+  }
+  .button:hover {
+    transition: color 0.4s ease;
+    color: black;
+    cursor: pointer;
+  }
+  .animation:after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: -1;
+    transform-origin: 100%;
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  .animation:hover:after {
+    transform-origin: 0%;
+    transform: scaleX(1);
+  }
