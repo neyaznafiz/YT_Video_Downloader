@@ -39,6 +39,12 @@ app.get("/api/get-video-info/:videoId", async (req, res) => {
   });
 });
 
+// video download api
+app.get('/download-video', (req, res)=>{
+  const {id, resolution}= req.query;
+  console.log(req.query);
+})
+
 app.get("/", (req, res) => {
   res.send("Hello Downloader");
 });

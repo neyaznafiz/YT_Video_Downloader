@@ -8,6 +8,10 @@ const Download = () => {
   const [resu, setResu] = useState("");
   const [loader, setLoader] = useState(false);
 
+  // get video id from video link
+  const videoIdOne = link.split("https://youtu.be/")[1];
+  const videoIdTwo = link.split("https://www.youtube.com/watch?v=")[1];
+
   //   for get input valu with onChange
   const handleChange = (e) => {
     setLink(e.target.value);
@@ -16,9 +20,6 @@ const Download = () => {
   // form submit
   const videoDetailsGet = async (e) => {
     e.preventDefault();
-
-    const videoIdOne = link.split("https://youtu.be/")[1];
-    const videoIdTwo = link.split("https://www.youtube.com/watch?v=")[1];
 
     try {
       setLoader(true);
@@ -33,16 +34,20 @@ const Download = () => {
     }
   };
 
-  console.log(vdInfo);
+  // console.log(vdInfo);
+  // console.log(resu)
 
   // video download function
-  const handleVideoDownload =()=>{
-    
-  }
+  const handleVideoDownload = () => {
+    const url = `http://localhost:5000/download-video/?id=${videoIdOne || videoIdTwo}&resolution=${resu}`;
+    window.location.href = url;
+  };
 
   return (
-    <div className="w-[700px] h-[600px] bg-gray-900 flex flex-col justify-start items-center p-4 relative">
-      <h1 className="text-white text-4xl py-6 uppercase">YT Video downloader</h1>
+    <div className="w-[800px] h-[600px] bg-gray-900 flex flex-col justify-start items-center p-4 relative">
+      <h1 className="text-white text-4xl py-6 uppercase">
+        YT Video downloader
+      </h1>
 
       {/* input section */}
       <div className="mt-8">
@@ -83,9 +88,10 @@ const Download = () => {
                 <span>Time : 08:33</span>
 
                 {/* resu */}
-                <div className="">
+                <div>
                   <select
-                    value=""
+                    onChange={(e) => setResu(e.target.value)}
+                    defaultValue={vdInfo.lastResu}
                     className="px-3 py-2 outline-none bg-transparent border border-yellow-600 w-full"
                   >
                     {vdInfo.videoResu.length > 0 &&
@@ -99,8 +105,12 @@ const Download = () => {
                         </option>
                       ))}
                   </select>
-                  <button onClick={handleVideoDownload} className="button animation">Download</button>
-
+                  <button
+                    onClick={handleVideoDownload}
+                    className="button animation"
+                  >
+                    Download
+                  </button>
                 </div>
               </div>
             </div>
