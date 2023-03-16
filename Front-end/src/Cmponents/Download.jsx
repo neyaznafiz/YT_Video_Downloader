@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 const Download = () => {
   const [link, setLink] = useState("");
   const [vdInfo, setVdInfo] = useState("");
+  const [resu, setResu] = useState("");
+  const [loader, setLoader] = useState(false);
 
   //   for get input valu with onChange
   const handleChange = (e) => {
@@ -18,13 +21,19 @@ const Download = () => {
     const videoIdTwo = link.split("https://www.youtube.com/watch?v=")[1];
 
     try {
-      const { data } = await axios.get(`http://localhost:5000/api/get-video-info/${videoIdOne || videoIdTwo}`);
-
-      console.log(data)
+      setLoader(true);
+      const { data } = await axios.get(
+        `http://localhost:5000/api/get-video-info/${videoIdOne || videoIdTwo}`
+      );
+      setLoader(false);
+      setVdInfo(data.videoInfo);
+      setResu(data.videoInfo.lastResu);
     } catch (error) {
-     console.log(error.response)   
+      console.log(error.response);
     }
   };
+
+  console.log(vdInfo);
 
   return (
     <div className="w-[600px] h-[500px] bg-gray-900 flex flex-col justify-start items-center p-4 relative">
@@ -45,6 +54,43 @@ const Download = () => {
             Click
           </button>
         </form>
+      </div>
+
+      {/* video info */}
+      <div>
+        {loader ? (
+          <div className="w-full py-20 text-center">
+            <ScaleLoader color="#d9a521" />
+          </div>
+        ) : (
+          vdInfo && (
+            <div className="flex gap-3 my-10 w-[470px]">
+              {/* thumbnail img */}
+              <img
+                src={vdInfo.thumbnailUrl}
+                alt="video thumbnail"
+                className="w-52 rounded-lg border-2 border-yellow-600 p-2"
+              />
+
+              {/* info */}
+              <div className="text-white flex flex-col gap-3">
+                <h2>{vdInfo.title.slice(0, 60)}...</h2>
+                <span>Time : 08:33</span>
+
+                {/* resu */}
+                <div>
+                  <select
+                    value=""
+                    className="px-3 py-2 outline-none bg-transparent border border-yellow-600 w-56"
+                  >
+                    {vdInfo.videoResu.length > 0 &&
+                      vdInfo.videoResu.map((data, index) => <option key={index} value={data} className="bg-gray-900">{data}p</option>)}
+                  </select>
+                </div>
+              </div>
+            </div>
+          )
+        )}
       </div>
     </div>
   );
