@@ -35,9 +35,14 @@ const Download = () => {
 
   console.log(vdInfo);
 
+  // video download function
+  const handleVideoDownload =()=>{
+    
+  }
+
   return (
-    <div className="w-[600px] h-[500px] bg-gray-900 flex flex-col justify-start items-center p-4 relative">
-      <h1 className="text-white text-4xl py-6">Youtube Video downloader</h1>
+    <div className="w-[700px] h-[600px] bg-gray-900 flex flex-col justify-start items-center p-4 relative">
+      <h1 className="text-white text-4xl py-6 uppercase">YT Video downloader</h1>
 
       {/* input section */}
       <div className="mt-8">
@@ -47,7 +52,7 @@ const Download = () => {
             required
             type="text"
             placeholder="Input the video link here"
-            className="text-white outline-none bg-transparent w-[380px] h-[40px] px-3 overflow-hidden border border-yellow-600"
+            className="text-white outline-none bg-transparent w-[465px] h-[40px] px-3 overflow-hidden border border-yellow-600"
           />
 
           <button type="submit" className="button animation">
@@ -57,7 +62,7 @@ const Download = () => {
       </div>
 
       {/* video info */}
-      <div>
+      <div className="mt-14">
         {loader ? (
           <div className="w-full py-20 text-center">
             <ScaleLoader color="#d9a521" />
@@ -69,23 +74,33 @@ const Download = () => {
               <img
                 src={vdInfo.thumbnailUrl}
                 alt="video thumbnail"
-                className="w-52 rounded-lg border-2 border-yellow-600 p-2"
+                className="w-56 h-44 rounded-lg border-2 border-yellow-600 p-2"
               />
 
               {/* info */}
               <div className="text-white flex flex-col gap-3">
-                <h2>{vdInfo.title.slice(0, 60)}...</h2>
+                <h2>{vdInfo.title.slice(0, 50)}...</h2>
                 <span>Time : 08:33</span>
 
                 {/* resu */}
-                <div>
+                <div className="">
                   <select
                     value=""
-                    className="px-3 py-2 outline-none bg-transparent border border-yellow-600 w-56"
+                    className="px-3 py-2 outline-none bg-transparent border border-yellow-600 w-full"
                   >
                     {vdInfo.videoResu.length > 0 &&
-                      vdInfo.videoResu.map((data, index) => <option key={index} value={data} className="bg-gray-900">{data}p</option>)}
+                      vdInfo.videoResu.map((data, index) => (
+                        <option
+                          key={index}
+                          value={data}
+                          className="bg-gray-900"
+                        >
+                          {data}p
+                        </option>
+                      ))}
                   </select>
+                  <button onClick={handleVideoDownload} className="button animation">Download</button>
+
                 </div>
               </div>
             </div>
